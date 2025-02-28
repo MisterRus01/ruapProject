@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Azure ML Prediction</title>
+</head>
+<body>
+    <h2>Enter Data for Prediction</h2>
+    <form id="predict-form">
+        <textarea id="input-data" rows="5" cols="50"></textarea><br>
+        <button type="button" onclick="sendPrediction()">Predict</button>
+    </form>
+    <h3>Prediction Result:</h3>
+    <p id="result"></p>
+
+    <script>
+        function sendPrediction() {
+            let inputData = document.getElementById("input-data").value;
+            fetch('/predict', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: inputData
+            })
+            .then(response => response.json())
+            .then(data => document.getElementById("result").innerText = JSON.stringify(data))
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>
