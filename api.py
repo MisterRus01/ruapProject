@@ -40,10 +40,8 @@ def predict():
         req = urllib.request.Request(API_URL, body, headers)
         response = urllib.request.urlopen(req)
         result = json.loads(response.read())
-        print(result)
-        scored_labels = result["Results"]["WebServiceOutput0"][0]["Scored Labels"]
-        print(scored_labels)
-        return f"{scored_labels}"
+
+        return jsonify(result)
 
     except urllib.error.HTTPError as e:
         return jsonify({"error": e.read().decode("utf-8")}), e.code
@@ -51,4 +49,3 @@ def predict():
 
 if __name__ == '__main__':
     app.run(debug=True)
-
